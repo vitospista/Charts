@@ -2,9 +2,32 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>It works</title>
-   <script src="script.js" defer></script>
+	<link rel=stylesheet href="css/bootstrap.css">
 </head>
 <body>
-  <canvas id="canvas" width=300 height=300></canvas>	
+	<canvas id="canvas1" width=400 height=150 style="border: 1px solid black;"></canvas><br/>
+	<canvas id="canvas2" width=640 height=500 style="border: 1px solid blue;"></canvas>
+	
+	<div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+		<h2>Choose a category:</h2>
+		<div class="btn-group" role="group">
+			<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Categories
+			</button>
+			<div id="dropCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+				
+			</div>
+		</div>
+	</div>
+	
+	<canvas id="canvas3" width=640 height=300></canvas>
+	
+	
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="js/popper.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script	src="js/data.js"></script>
+	<script src= "js/script.js"></script>
+	
 </body>
 </html>
