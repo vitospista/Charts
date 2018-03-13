@@ -29,7 +29,38 @@
 
 		<canvas id="canvas3" width=640 height=300></canvas>
 		
-		<canvas id="canvas4" width=800 height=300 style="border: 1px solid black;"></canvas>
+		<section>
+			<div id="btnYears" class="btn-group" role="group">
+				<button type="button" class="btn btn-secondary active" value="2016">2016</button>
+				<button type="button" class="btn btn-secondary" value="2017">2017</button>
+				<button type="button" class="btn btn-secondary" value="2018">2018</button>
+			</div>
+			<div id="chkOutcomes" class="input-group">
+				<div class="input-group-prepend">
+					<div class="input-group-text">
+						<input id="check1" type="checkbox" value="Success" aria-label="Radio button for following text input" checked>					
+					</div>				
+				</div>
+				<label class="form-control" for="check1">Successes</label>
+
+				<div class="input-group-prepend">
+					<div class="input-group-text">
+						<input id="check2" type="checkbox" value="Complications" aria-label="Radio button for following text input">					
+					</div>				
+				</div>
+				<label class="form-control" for="check2">Complications</label>
+
+				<div class="input-group-prepend">
+					<div class="input-group-text">
+						<input id="check3" type="checkbox" value="Failure" aria-label="Radio button for following text input">					
+					</div>				
+				</div>
+				<label class="form-control" for="check3">Failures</label>
+			</div>
+			<div class="card">
+				<canvas id="canvas4" width=800 height=300></canvas>
+			</div>
+		</section>
 	</div>
 	
 <!--
@@ -41,8 +72,10 @@
 	<script src="js/jquery-3.3.1.js"></script>
 	<script src="js/popper.js"></script>
 	<script src="js/bootstrap.js"></script>
+	
 	<script	src="js/data.js"></script>
-	<script src= "js/script.js"></script>
+	<script	src="js/chart.js"></script>
+	<script src="js/script.js"></script>
 	
 </body>
 </html>
