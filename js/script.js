@@ -99,80 +99,61 @@ function drawArc(ctx, centerX, centerY, radius, currentAngle, sliceAngle, color)
 	ctx.fill();
 }
 
-
-function OutcomeChart(options){
+function constructor(options){
 	this.options = options;
 	this.canvas = options.canvas;
 	this.ctx = this.canvas.getContext('2d');
 	this.colors = options.colors;
-	this.data = options.data;
-	
-	this.draw = function(){
-		const drawingWidth = this.canvas.width - this.options.padding * 2;
-		const drawingHeight = this.canvas.height - this.options.padding * 2;
+}
+
+function StackedChart(options){
+	constructor.call(this, options);
+
+	this.draw = function(data){
+		let padding = this.options.padding;
+		let barWidth = this.options.barWidth;
+		let spacing = this.options.spacing;
+		let numberOfBars = Object.keys(data).length;
+		this.canvas.width = padding * 2 + numberOfBars*barWidth + (numberOfBars-1)*spacing;
+		let drawingHeight = this.canvas.height - padding * 2;		
+		let currentX = padding;
 		
 		//drawing the bars
-		//let barIndex = 0;
-		let numberOfBars = Object.keys(this.data).length;
-		let barWidth = Math.round((drawingWidth-(numberOfBars-1)*this.options.spacing)/numberOfBars);
-		let currentX = this.options.padding;
-		
-		for (let doc in this.data){
-			let val = this.data[doc];
+		for (let doc in data){
+			let val = data[doc];
 			let total = Object.values(val).reduce((a,b)=>a+b);					
-			let currentY = this.options.padding;
+			let currentY = padding;
 			
 			for (let result of ['Success', 'Complications', 'Failure']){
 				let barHeight;
 				if (result!=='Failure')
 					barHeight = Math.round( drawingHeight * val[result]/total);
 				else
-					barHeight = drawingHeight-currentY+this.options.padding;
+					barHeight = drawingHeight - currentY + padding;
 				
 				drawBar(this.ctx, currentX, currentY, barWidth, barHeight, this.colors[result]);				
 				currentY += barHeight;
 			}	
-			currentX += barWidth + this.options.spacing;
-			//barIndex++;
+			currentX += barWidth + spacing;
 		}
 		//drawing the grid lines
-		let gridValue = 0;
-		while (gridValue <= 100){
-				var gridY = drawingHeight * (1 - gridValue/100) + this.options.padding;
+		let scaleValue = 0;
+		while (scaleValue <= 100){
+				var gridY = drawingHeight * (1 - scaleValue/100) + this.options.padding;
 				drawLine(this.ctx, 0, gridY, this.canvas.width, gridY, this.options.gridColor);
 
 				//writing grid markers
-				writeText(this.ctx, this.options.gridColor, gridValue, 5, gridY - 2)
-				gridValue+=this.options.gridScale;
+				writeText(this.ctx, this.options.gridColor, this.options.font, scaleValue, 0, gridY)
+				writeText(this.ctx, this.options.gridColor, this.options.font, scaleValue, this.canvas.width-20, gridY)
+				scaleValue+=this.options.gridScale;
 		}
 	}
 }
 
-var chart1 = new OutcomeChart(
-	{
-		canvas: canvas2,       
-		padding: 20,
-		gridScale: 10,
-		spacing: 0,
-		gridColor: 'lightgrey',
-		font: 'bold 10px Arial',
-		data: data.outcome,
-		colors: {
-			Success: '#66cc66',
-			Complications: '#ffd319',
-			Failure: '#fe4e00'
-		}
-	}
-);
-chart1.draw();
 
-function OperativityChart(options){	
-	this.options = options;
-	this.canvas = options.canvas;
-	this.ctx = this.canvas.getContext('2d');
-	this.colors = options.colors;
-	
-	
+function PieChart(options){	
+	constructor.call(this, options);
+		
 	this.draw = function(data){
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		let total = Object.values(data).reduce((a,b)=>a+b);
@@ -199,16 +180,75 @@ function OperativityChart(options){
 	}
 }
 
-var pieCharter = new OperativityChart(
+function HorizontalChart(options){
+	constructor.call(this, options);	
+
+	this.draw = function(data){
+		let padding = this.options.padding;
+		let spacing = this.options.spacing;
+		let numberOfBars = Object.keys(data).length;				
+		let currentY = padding;
+		let drawingWidth = this.canvas.width - padding*2;
+		let drawingHeight = (this.canvas.height)*.80 - padding*2;
+		let max = Math.max.apply(null, Object.values(data));
+		let colorIndex = 0;
+		let barHeight = (drawingHeight - (numberOfBars-1)*spacing) / numberOfBars;
+		let legendX = padding;
+		
+		for (let categ in data){
+			let val = data[categ];
+			let barWidth = Math.round( drawingWidth * val/max);
+			let currentColor = this.colors[colorIndex++%this.colors.length];
+			drawBar(this.ctx, padding, currentY, barWidth, barHeight, currentColor);	
+			currentY += barHeight+ spacing;	
+			
+			let text = categ;
+			writeText(this.ctx, currentColor, this.options.legendFont, text, legendX, this.canvas.height*.9);
+			legendX += 150;
+		}	
+		
+		//drawing the grid lines
+		let scaleValue = 0;
+		let gridScale = Math.max(1, max/10);
+		while (scaleValue <= max){
+			var gridX = drawingWidth * (scaleValue/max) + this.options.padding;
+			drawLine(this.ctx, gridX, 0, gridX, drawingHeight+2*padding, this.options.gridColor);
+
+			//writing grid markers
+			writeText(this.ctx, this.options.gridColor, this.options.gridFont, scaleValue, gridX+5, 15)
+			writeText(this.ctx, this.options.gridColor, this.options.gridFont, scaleValue, gridX+5, drawingHeight+2*padding-5)
+			scaleValue+=gridScale;
+		}
+	}
+}
+
+var stackedChart = new StackedChart(
+	{
+		canvas: canvas2,       
+		padding: 20,
+		gridScale: 10,
+		spacing: 10,
+		gridColor: 'lightgrey',
+		font: 'bold 10px Arial',
+		barWidth: 70,
+		colors: {
+			Success: '#28a745',
+			Complications: '#ffc107',
+			Failure: '#dc3545'
+		}
+	}
+);
+stackedChart.draw(data.outcome);
+
+
+var pieChart = new PieChart(
 	{
 		canvas: canvas3,    
 		padding: 20,	
 		font: '20px Monospace',		
-		colors: ['#fd7690', '#ceea8a', '#ffae03', '#aae4b7', '#f0caca', '#d1c4a4', '#01ea0e', '#40e0d0', '#66cdaa']
+		colors: ['#fe4e00', '#fd7690', '#ceea8a', '#ffae03', '#aae4b7', '#f0caca', '#d1c4a4', '#66cdaa', '#66cc66', '#ffd319']
 	}
 );
-//let opTestData = {'Virgil Zara Howland': 25, 'Desiree Lucas': 41, 'Bridget Malinda': 10, 'Luz Tran': 6, 'Litzy Wilcox': 36, 'Alanna Burnett': 34, 'Damian Saunders': 31, 'Damari Craig': 33};
-//pieCharter.draw(opTestData);
 
 var select = document.getElementById("dropCategories");
 for(let categ in data.operativity) {
@@ -217,13 +257,41 @@ for(let categ in data.operativity) {
 	btn.className = 'dropdown-item';
 	btn.value = categ;
 	btn.innerHTML = categ;
-	btn.addEventListener('click', ()=> pieCharter.draw(data.operativity[categ]));
+	btn.addEventListener('click', ()=> pieChart.draw(data.operativity[categ]));
 	select.appendChild(btn);
 }
 
+select.children[0].click();
 
+function filterSurgery(year, outcomes){
+	let result = {};
+	let yearData = data.surgery[year];
+	for (let type in yearData){
+		for (let outcome of outcomes){
+			if (yearData[type][outcome]){
+				if (!result[type])
+					result[type] = yearData[type][outcome];
+				else
+					result[type] += yearData[type][outcome];
+			}
+		}
+	}	
+	return result;
+}
 
-
+var horizontalChart = new HorizontalChart(
+	{
+		canvas: canvas4,       
+		padding: 20,
+		spacing: 10,
+		gridColor: 'lightgrey',
+		gridFont: 'bold 10px Arial',
+		legendFont: '14px Monospace',
+		colors: ['#fe4e00', '#fd7690', '#ceea8a', '#ffae03', '#aae4b7', '#f0caca', '#d1c4a4', '#66cdaa', '#66cc66', '#ffd319']
+	}
+);
+let testData = filterSurgery(2016, ['Success']);
+horizontalChart.draw(testData);
 
 
 
