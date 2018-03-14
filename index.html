@@ -5,63 +5,105 @@
 <!--	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 -->
+	<link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
 	<link rel=stylesheet href="css/bootstrap.css">
 	<link rel=stylesheet href="css/style.css">
 </head>
-<body>
-	<div class="container">
-		<canvas id="canvas1" width=400 height=150 style="border: 1px solid black;"></canvas>
-
-		<div class="wrapper">
-			<canvas id="canvas2" width=640 height=300></canvas>
+<body id="page-top">
+		<nav class="navbar navbar-expand-lg fixed-top navbar-dark" id="mainNav">
+			<div class="container">
+			<a class="navbar-brand js-scroll-trigger" href="#page-top">
+				Dr. House Graphics
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav ml-auto">
+					<a class="nav-item nav-link" href="#stacked">Stacked</a>
+					<a class="nav-item nav-link" href="#pie">Pie</a>
+					<a class="nav-item nav-link" href="#horizontal">Horizontal</a>
+				</div>
+			</div>
+			</div>
+		</nav>
+	<header>
+		<div class="container text-center text-white">
+			<h1><span class="box">H</span><span class="underline">OUSE</span></h1>
+			<blockquote class="blockquote">
+  			<p class="mb-0">I don't ask why patients lie, I just assume they all do.</p>
+			</blockquote>
 		</div>
-
-		<div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-			<h2 class="mr-5">Choose a category:</h2>
-			<div class="btn-group" role="group">
-				<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Categories
-				</button>
-				<div id="dropCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop1">			
+	</header>
+	<main>
+		<section id="stacked">	
+			<div class="container text-center p-5">
+				<h2>Efficiency chart</h2>
+				<div class="wrapper mx-auto">					
+					<canvas id="canvas1" class="rounded" width=640 height=300></canvas>
 				</div>
-			</div>
-		</div>
-
-		<canvas id="canvas3" width=640 height=300></canvas>
-		
-		<section>
-			<div id="btnYears" class="btn-group" role="group">
-				<button type="button" class="btn btn-secondary active" value="2016">2016</button>
-				<button type="button" class="btn btn-secondary" value="2017">2017</button>
-				<button type="button" class="btn btn-secondary" value="2018">2018</button>
-			</div>
-			<div id="chkOutcomes" class="input-group">
-				<div class="input-group-prepend">
-					<div class="input-group-text">
-						<input id="check1" type="checkbox" value="Success" aria-label="Radio button for following text input" checked>					
-					</div>				
-				</div>
-				<label class="form-control" for="check1">Successes</label>
-
-				<div class="input-group-prepend">
-					<div class="input-group-text">
-						<input id="check2" type="checkbox" value="Complications" aria-label="Radio button for following text input">					
-					</div>				
-				</div>
-				<label class="form-control" for="check2">Complications</label>
-
-				<div class="input-group-prepend">
-					<div class="input-group-text">
-						<input id="check3" type="checkbox" value="Failure" aria-label="Radio button for following text input">					
-					</div>				
-				</div>
-				<label class="form-control" for="check3">Failures</label>
-			</div>
-			<div class="card">
-				<canvas id="canvas4" width=800 height=300></canvas>
 			</div>
 		</section>
-	</div>
+		<section id="pie" class="is-striped">
+			<div class="container text-center p-5">
+				<h2 id=pieTitle></h2>
+				<canvas id="canvas2" width=640 height=300></canvas>
+				<div class="btn-toolbar mb-3 float-right" role="toolbar" aria-label="Toolbar with button groups">				
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-lg btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Categories
+						</button>
+						<div id="dropCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop1">			
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>	
+		<section id="horizontal">
+			<div class="container text-center p-5">
+				<h2>Surgery materials chart</h2>
+				<canvas id="canvas3" width=640 height=300></canvas>
+				<div class="float-right">
+					<div id="btnYears" class="btn-group" role="group">
+						<button type="button" class="btn btn-lg btn-secondary active" value="2016">2016</button>
+						<button type="button" class="btn btn-lg btn-secondary" value="2017">2017</button>
+						<button type="button" class="btn btn-lg btn-secondary" value="2018">2018</button>
+					</div>
+					<div id="chkOutcomes">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<div class="input-group-text">
+									<input id="check1" type="checkbox" value="Success" aria-label="Radio button for following text input" checked>					
+								</div>				
+							</div>
+							<label class="form-control" for="check1">Successes</label>
+						</div>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<div class="input-group-text">
+									<input id="check2" type="checkbox" value="Complications" aria-label="Radio button for following text input">					
+								</div>				
+							</div>
+							<label class="form-control" for="check2">Complications</label>
+						</div>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<div class="input-group-text">
+									<input id="check3" type="checkbox" value="Failure" aria-label="Radio button for following text input">					
+								</div>				
+							</div>
+							<label class="form-control" for="check3">Failures</label>
+						</div>
+					</div>	
+				</div>
+		</div>
+		</section>
+	</main>
+	<footer class="py-5 bg-black">
+		<div class="container">
+			<p class="m-0 text-center text-white small">Dr House Graphics by <em>Istvan Vitos</em> - 2018</p>
+		</div>
+	</footer>
 	
 <!--
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

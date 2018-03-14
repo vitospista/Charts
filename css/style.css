@@ -1,4 +1,60 @@
+body {
+	color: #3B3738;
+	background-color: #F5F3EE;
+	
+	font-family: 'Catamaran',Helvetica,Arial,Lucida,sans-serif;
+}
+#mainNav {
+	background-color: rgba(0,0,0,.7);
+}
+
+#mainNav > div > a {
+		color: rgba(255, 255, 255, 0.75);		
+}
+footer {
+	background-color: #1a252f;
+}
+
+section {
+	padding-top: 50px;
+}
+header>div.container {
+	width: 1100px;
+	background-image: url(../img/hero-img.jpg);
+	height: 400px;	
+	padding-top: 18rem;
+	opacity: .7;
+}
+h1 {
+	text-transform: uppercase;
+	font-weight: 800;
+	letter-spacing: 6px;
+	
+}
+h1 span {
+	display: inline-block;
+	height: 50px;
+}
+
+h1 span.box {
+	width: 50px;
+	border: 3px solid white;
+	margin-right: 5px;
+}
+
+h1 span.underline {
+	padding-top: 3px;
+	border-bottom: 3px solid white;
+}
+
 .wrapper {
 	width: 800px;
 	overflow-x: scroll;
+}
+
+canvas {
+}
+
+.is-striped {
+	background-color: #f5f5f5;
 }
