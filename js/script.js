@@ -8,9 +8,9 @@ const stackedChart = new StackedChart(
 		font: 'bold 10px Arial',
 		barWidth: 80,
 		colors: {
-			Success: '#28a745',
-			Complications: '#ffc107',
-			Failure: '#dc3545'
+			Success: '#70C167',
+			Complications: 'rgb(255, 193, 7, .6)',
+			Failure: 'rgb(221, 40, 19, .8)'
 		}
 	}
 );
@@ -22,7 +22,7 @@ const pieChart = new PieChart(
 		canvas: canvas2,    
 		padding: 20,	
 		font: '20px Monospace',		
-		colors: ['#fe4e00', '#fd7690', '#ceea8a', '#ffae03', '#aae4b7', '#f0caca', '#d1c4a4', '#66cdaa', '#66cc66', '#ffd319']
+		colors: ['#fe4e00', '#fd7690', '#66cc66', '#ffae03', '#aae4b7', '#f0caca', '#d1c4a4', '#66cdaa', '#ceea8a', '#ffd319']
 	}
 );
 const select = document.getElementById("dropCategories");
@@ -51,7 +51,7 @@ const horizontalChart = new HorizontalChart(
 		gridColor: 'darkgrey',
 		gridFont: 'bold 10px Arial',
 		legendFont: '20px Monospace',
-		colors: ['#fe4e00', '#fd7690', '#ceea8a', '#ffae03', '#aae4b7', '#f0caca', '#d1c4a4', '#66cdaa', '#66cc66', '#ffd319']
+		colors: ['#fe4e00', '#fd7690', '#66cc66', '#ffae03', '#aae4b7', '#f0caca', '#d1c4a4', '#66cdaa', '#ceea8a', '#ffd319']
 	}
 );
 const btnYears = document.getElementById('btnYears');
@@ -61,7 +61,6 @@ let selectedOutcomes = ['Success'];
 refreshSurgeryData();
 
 btnYears.addEventListener('click', function(e){
-	//console.log(e.target);
 	if (e.target !== selectedYearButton){
 		selectedYearButton.classList.remove('active');
 		e.target.classList.add('active');
@@ -104,8 +103,36 @@ function refreshSurgeryData(){
 	horizontalChart.draw(yearData);	
 }
 
+//scrolling
+const links = document.querySelectorAll('#navbarNavAltMarkup>div>a');
+links.forEach(i=>i.addEventListener('click', clickedLink));
 
+function clickedLink(event){
+	var scrollTo = document.getElementById(event.target.href.split('#')[1]);
+	event.preventDefault();
+	scrollTo.scrollIntoView({behavior: 'smooth', inline: 'nearest'})
+}
 
+let activeLink;
+window.addEventListener('scroll', function(){
+	if (window.scrollY > 300 && window.scrollY < 750)
+		activate(0);
+	else if (window.scrollY > 750 && window.scrollY < 1300)
+		activate(1);
+	else if (window.scrollY > 1300)
+		activate(2);
+	else activate();
+	
+})
+
+function activate(index){
+	if (activeLink)
+		activeLink.classList.remove('active','rounded');	
+	if (index!==undefined){
+		links[index].classList.add('active','rounded');
+		activeLink = links[index];
+	}
+}
 
 
 

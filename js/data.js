@@ -48,6 +48,7 @@ const names = [
 	"Peyton Preston",
 	"Paxton Huerta",
 	"Gaven Turner",
+	//surgeons:
 	"Lilah Torres",
 	"Luz Tran",
 	"Amara Landry",
@@ -57,14 +58,15 @@ const names = [
 	"Damian Saunders",
 	"Roman Sherman",
 	"Ayden Lopez",
-	//"Selah Duffy",
-	//"Maliyah Byrd",
-	//"Isiah Massey"
 ];
 
 let doctors = names.map(function(i){
+	//this makes sure that surgery data will be generated
+	if (names.indexOf(i) > 20)
+		return {name: i, spec: specialties.SURG};
+	
 	let specialtyCount = Object.keys(specialties).length;
-	let specialtyIndex = Math.floor(Math.random()*specialtyCount);
+	let specialtyIndex = Math.floor(Math.random()*(specialtyCount-1));
 	return {name: i, spec: Object.values(specialties)[specialtyIndex]};
 });
 
