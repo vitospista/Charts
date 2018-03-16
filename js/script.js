@@ -115,11 +115,11 @@ function clickedLink(event){
 
 let activeLink;
 window.addEventListener('scroll', function(){
-	if (window.scrollY > 300 && window.scrollY < 750)
+	if (window.scrollY > 195 && window.scrollY < 690)
 		activate(0);
-	else if (window.scrollY > 750 && window.scrollY < 1300)
+	else if (window.scrollY >= 690 && window.scrollY < 1090)
 		activate(1);
-	else if (window.scrollY > 1300)
+	else if (window.scrollY >= 1090)
 		activate(2);
 	else activate();
 	
