@@ -57,6 +57,18 @@ function StackedChart(options){
 		let drawingHeight = this.canvas.height - padding * 2 - 30;		
 		let currentX = padding;
 		
+		//drawing the grid lines
+		let scaleValue = 0;
+		while (scaleValue <= 100){
+				var gridY = drawingHeight * (1 - scaleValue / 100) + padding;
+				this.drawLine(0, gridY, this.canvas.width, gridY, this.options.gridColor);
+
+				//writing grid markers
+				this.writeText(this.options.gridColor, this.options.font, scaleValue, 0, gridY)
+				this.writeText(this.options.gridColor, this.options.font, scaleValue, this.canvas.width - 20, gridY)
+				scaleValue+=this.options.gridScale;
+		}
+		
 		//drawing the bars
 		for (let doc in data){
 			let val = data[doc];
@@ -74,19 +86,8 @@ function StackedChart(options){
 				currentY += barHeight;
 			}				
 			//writing name
-			this.writeText(this.options.gridColor, this.options.font, doc, currentX, drawingHeight+padding+30);
+			this.writeText(this.options.legend.color, this.options.legend.font, doc, currentX, drawingHeight+padding+30);
 			currentX += barWidth + spacing;
-		}
-		//drawing the grid lines
-		let scaleValue = 0;
-		while (scaleValue <= 100){
-				var gridY = drawingHeight * (1 - scaleValue / 100) + padding;
-				this.drawLine(0, gridY, this.canvas.width, gridY, this.options.gridColor);
-
-				//writing grid markers
-				this.writeText(this.options.gridColor, this.options.font, scaleValue, 0, gridY)
-				this.writeText(this.options.gridColor, this.options.font, scaleValue, this.canvas.width - 20, gridY)
-				scaleValue+=this.options.gridScale;
 		}
 	}
 }
@@ -114,7 +115,7 @@ function PieChart(options){
 			this.drawArc(centerX, centerY, centerY - this.options.padding, currentAngle, sliceAngle, currentColor);
 			currentAngle += sliceAngle;
 			
-			let text = doc + ' ' + Math.round(percentage * 100) + '%';
+			let text = doc + ': ' + data[doc] + ' ('+ Math.round(percentage * 100) + '%)';
 			this.writeText(currentColor, this.options.font, text, legendX, legendY);
 			legendY += legendSpacing + 20;
 		}
@@ -132,24 +133,12 @@ function HorizontalChart(options){
 		let numberOfBars = Object.keys(data).length;				
 		let currentY = padding;
 		let drawingWidth = (this.canvas.width - padding * 2) * .65 ;
-		let drawingHeight = this.canvas.height - padding * 2;
-		let max = Math.max.apply(null, Object.values(data));
+		let drawingHeight = this.canvas.height - padding * 2;		
 		let colorIndex = 0;
 		let barHeight = (drawingHeight - (numberOfBars - 1) * spacing) / numberOfBars;		
 		let textWidth = this.canvas.width * .35 - padding;
-		
-		for (let categ in data){
-			let val = data[categ];
-			let barWidth = Math.round( drawingWidth * val/max);
-			let currentColor = this.colors[colorIndex++ % this.colors.length];
-			this.drawBar(textWidth, currentY, barWidth, barHeight, currentColor);	
-			
-			let text = categ;
-			this.writeText(currentColor, this.options.legendFont, text, padding, currentY, 'top');	
-			
-			currentY += barHeight + spacing;
-		}	
-		
+		let max = Math.max.apply(null, Object.values(data).concat(10));
+
 		//drawing the grid lines
 		let scaleValue = 0;
 		let gridScale = Math.max(1, Math.round(max / 10));
@@ -162,6 +151,19 @@ function HorizontalChart(options){
 			this.writeText(this.options.gridColor, this.options.gridFont, scaleValue, gridX + 5, drawingHeight + 2 * padding - 5)
 			scaleValue += gridScale;
 		}
+		
+		//drawing the bars
+		for (let categ in data){
+			let val = data[categ];
+			let barWidth = Math.round( drawingWidth * val/max);
+			let currentColor = this.colors[colorIndex++ % this.colors.length];
+			this.drawBar(textWidth, currentY, barWidth, barHeight, currentColor);	
+			
+			let text = categ;
+			this.writeText(currentColor, this.options.legendFont, text, padding, currentY, 'top');	
+			
+			currentY += barHeight + spacing;
+		}					
 	}
 }
 HorizontalChart.prototype = Chart;

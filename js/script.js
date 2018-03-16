@@ -4,13 +4,17 @@ const stackedChart = new StackedChart(
 		padding: 20,
 		gridScale: 10,
 		spacing: 40,
-		gridColor: 'darkgrey',
+		gridColor: 'lightgrey',
+		legend:{
+			color: 'darkgrey',
+			font: '12px Arial'
+		},
 		font: 'bold 10px Arial',
 		barWidth: 80,
 		colors: {
 			Success: '#70C167',
-			Complications: 'rgba(255, 193, 7, .6)',
-			Failure: 'rgba(221, 40, 19, .8)'
+			Complications: '#ffc125',
+			Failure: '#ff4d4d'
 		}
 	}
 );
@@ -26,7 +30,7 @@ const pieChart = new PieChart(
 	}
 );
 const select = document.getElementById("dropCategories");
-const pieTitle = document.getElementById("pieTitle");
+const dropdown = document.getElementById("categories-dropdown");
 //create buttons for DropDown
 for(let categ in data.operativity) {
 	let btn = document.createElement('button');
@@ -35,12 +39,12 @@ for(let categ in data.operativity) {
 	btn.value = categ;
 	btn.innerHTML = categ;
 	btn.addEventListener('click', ()=> {
-		pieTitle.innerHTML = categ + ' chart';
+		dropdown.innerHTML = categ;
 		pieChart.draw(data.operativity[categ]);
 	});
 	select.appendChild(btn);
 }
-select.firstElementChild.click();
+//select.firstElementChild.click();
 
 
 const horizontalChart = new HorizontalChart(
@@ -48,7 +52,7 @@ const horizontalChart = new HorizontalChart(
 		canvas: canvas3,       
 		padding: 20,
 		spacing: 10,
-		gridColor: 'darkgrey',
+		gridColor: 'lightgrey',
 		gridFont: 'bold 10px Arial',
 		legendFont: '20px Monospace',
 		colors: ['#fe4e00', '#fd7690', '#66cc66', '#ffae03', '#aae4b7', '#f0caca', '#d1c4a4', '#66cdaa', '#ceea8a', '#ffd319']
@@ -82,10 +86,16 @@ chkOutcomes.addEventListener('click', function(e){
 	refreshSurgeryData();
 })
 
+function refreshSurgeryData(){
+	let yearData = filterSurgery(selectedYearButton.value, selectedOutcomes);
+	horizontalChart.draw(yearData);	
+}
+
 function filterSurgery(year, outcomes){
 	let result = {};
-	let yearData = data.surgery[year];
-	for (let type in yearData){
+	let yearData = data.surgery.years[year];
+	for (let type of Object.values(data.surgery.types)){					
+		result[type] = 0;
 		for (let outcome of outcomes){
 			if (yearData[type][outcome]){
 				if (!result[type])
@@ -98,10 +108,7 @@ function filterSurgery(year, outcomes){
 	return result;
 }
 
-function refreshSurgeryData(){
-	let yearData = filterSurgery(selectedYearButton.value, selectedOutcomes);
-	horizontalChart.draw(yearData);	
-}
+
 
 //scrolling
 const links = document.querySelectorAll('#navbarNavAltMarkup>div>a');
@@ -121,8 +128,7 @@ window.addEventListener('scroll', function(){
 		activate(1);
 	else if (window.scrollY >= 1090)
 		activate(2);
-	else activate();
-	
+	else activate();	
 })
 
 function activate(index){

@@ -2,9 +2,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Dr. House Charts</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!--	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
 	<link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
-<!--	<link rel=stylesheet href="css/bootstrap.css">-->
+	<link rel=stylesheet href="css/bootstrap.css">
 	<link rel=stylesheet href="css/style.css">
 </head>
 <body id="page-top">
@@ -17,9 +17,9 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav ml-auto">
+				<div class="navbar-nav ml-auto btn-group">
 					<a class="nav-item nav-link" href="#stacked">Efficiency</a>
-					<a class="nav-item nav-link" href="#pie">Work Hours</a>
+					<a class="nav-item nav-link" href="#pie">Productivity</a>
 					<a class="nav-item nav-link" href="#horizontal">Materials</a>
 				</div>
 			</div>
@@ -36,7 +36,7 @@
 	<main>
 		<section id="stacked">	
 			<div class="container text-center p-5">
-				<h2>Efficiency chart</h2>
+				<h2>Efficiency</h2>
 				<div class="wrapper mx-auto">					
 					<canvas id="canvas1" class="rounded" width=640 height=300></canvas>
 				</div>
@@ -44,12 +44,12 @@
 		</section>
 		<section id="pie" class="is-striped">
 			<div class="container text-center p-5">
-				<h2 id=pieTitle></h2>
+				<h2>Productivity</h2>
 				<canvas id="canvas2" width=640 height=300></canvas>
 				<div class="btn-toolbar mb-3 float-right" role="toolbar" aria-label="Toolbar with button groups">				
 					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-lg btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Categories
+						<button id="categories-dropdown" type="button" class="btn btn-lg btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Select a category...
 						</button>
 						<div id="dropCategories" class="dropdown-menu" aria-labelledby="btnGroupDrop1">			
 						</div>
@@ -59,7 +59,7 @@
 		</section>	
 		<section id="horizontal">
 			<div class="container text-center p-5">
-				<h2>Surgery materials chart</h2>
+				<h2>Surgery materials</h2>
 				<canvas id="canvas3" width=640 height=300></canvas>
 				<div class="float-right">
 					<div id="btnYears" class="btn-group" role="group">
@@ -103,15 +103,15 @@
 		</div>
 	</footer>
 	
+<!--
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+-->
 	
-<!--
 	<script src="js/jquery-3.3.1.js"></script>
 	<script src="js/popper.js"></script>
 	<script src="js/bootstrap.js"></script>
--->
 	
 	<script	src="js/data.js"></script>
 	<script	src="js/chart.js"></script>

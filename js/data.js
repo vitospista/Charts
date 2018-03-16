@@ -27,7 +27,7 @@ const years = [
 	2018
 ];
 const names = [
-	"Virgil Zara Howland",
+	"Virgil Howland",
 	"Lenny Joy Boon",
 	"Bridget Malinda",
 	"Dalton Moore",
@@ -132,7 +132,10 @@ surgeries.map(function(i){
 window.data = {
 	outcome: outcomeData,
 	operativity: operativityData,
-	surgery: surgeryData
+	surgery: {
+		years: surgeryData,
+		types: surgeryTypes
+	}
 }
 
 })(window)
