@@ -9,8 +9,8 @@ const stackedChart = new StackedChart(
 		barWidth: 80,
 		colors: {
 			Success: '#70C167',
-			Complications: 'rgb(255, 193, 7, .6)',
-			Failure: 'rgb(221, 40, 19, .8)'
+			Complications: 'rgba(255, 193, 7, .6)',
+			Failure: 'rgba(221, 40, 19, .8)'
 		}
 	}
 );
